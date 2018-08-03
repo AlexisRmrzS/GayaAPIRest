@@ -29,25 +29,10 @@ namespace GayaAPIRest.Controllers
         }
         
 
-        // GET: api/ContractedBudget/5
-        public IHttpActionResult Get(int id)
-        {
-            presupuesto2.Empresa = "Master Builder";
-            presupuesto2.Proyecto = "Altan Redes";
-            presupuesto2.Contratos = new Contratos();
-            presupuesto2.Contratos.Cliente = "Pedro Torres";
-            presupuesto2.Contratos.Ejercicio = 2017;
-            presupuesto2.Contratos.Periodo = 4;
-            presupuesto2.Contratos.NumContrato = "Contrato Constr.Prov";
-            presupuesto2.Contratos.Posiciones = new object[] { "016-INST. ELECTRICAS", "123495.98" };
-
-            return Ok(presupuesto2);
-        }
-
         // GET: api/ContractedBudget?Empresa=G001?Proyecto=ATT_TOREO_0131INTF01
         public IHttpActionResult Get(string Empresa, string Proyecto)
         {
-            presupuesto2.Empresa = "Master Builder II";
+            presupuesto2.Empresa = "Master Builder III";
             presupuesto2.Proyecto = "Altan Redes";
             presupuesto2.Contratos = new Contratos();
             presupuesto2.Contratos.Cliente = "Pedro Torres";
