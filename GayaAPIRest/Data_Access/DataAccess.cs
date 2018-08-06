@@ -15,7 +15,7 @@ namespace GayaAPIRest.Data_Access
 
         public DataTable ExecQuery(string Empresa, string Proyecto)
         {
-            string sqlSentence = "SELECT * FROM CP_PresupuestoContratado_CTE WHERE EMPRESA = @Empresa AND PROYECTO = @Proyecto";
+            string sqlSentence = "SELECT * FROM CP_PresupuestoContratado_CTE WHERE EMPRESA = @Empresa AND PROYECTO = @Proyecto ORDER BY Ejercicio, Periodo, FechaModificacion";
 
             if (connectionString.State == ConnectionState.Open)
                 connectionString.Close();

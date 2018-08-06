@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using Newtonsoft.Json;
 using System.Web.Http;
 using Cryptography;
 
@@ -14,35 +15,62 @@ namespace GayaAPIRest.Controllers
 {
     public class ContractedBudgetController : ApiController
     {
-        ContractedBudget presupuesto = new ContractedBudget { Empresa = "Gaya Construcciones", Proyecto = new Proyecto { Nombre = "ATT FASE II", Contrato = new Contrato { NumContrato = "Contrato Constr.Prov 332", Ejercicio = 2017, Periodo = 4, Cliente = new Cliente { CodCliente = "CTE-23213", Nombre = "Juan Perez"} , Posicion = new Posicion { Tipo = "POSICION", Nombre = "Presupuesto Inicial", Partida = new Partida { Nombre = "016-INSTALACIONES ELECTRICAS", Factor = 1, Importe = (float)182732.82, TipoCambio = (float)18.04, ImportePesos = (float)3296500.0728 } } } } };
-        PresupuestoContratado presupuesto2 = new PresupuestoContratado();
-
-        // GET: api/ContractedBudget
-        public string Get()
+        private ContractedBudget[] getBudget(string Empresa, string Proyecto)
         {
             DataAccess da = new DataAccess();
-            DataTable dt = da.ExecQuery("G001", "ATT_TOREO_0131INTF01");
+            DataTable dt = da.ExecQuery(Empresa, Proyecto);
+            ContractedBudget[] budget = new ContractedBudget[dt.Rows.Count];
 
-            return dt.Rows[0]["Contrato"].ToString() + " " + dt.Rows[0]["Partida"].ToString();
-            
-            //return Decrypt.FixedDecrypt(ConfigurationManager.AppSettings["secureConnection"]);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                ContractedBudget temp = new ContractedBudget();
+                temp.IDRegistro = i + 1;
+
+                temp.Registro = new Registro();
+
+                temp.Registro.IDEmpresa = dt.Rows[i]["Empresa"].ToString();
+                temp.Registro.NombreEmpresa = dt.Rows[i]["NombreEmpresa"].ToString();
+                temp.Registro.Proyecto = dt.Rows[i]["Proyecto"].ToString();
+                temp.Registro.Contrato = dt.Rows[i]["Contrato"].ToString();
+                temp.Registro.Ejercicio = Convert.ToInt32(dt.Rows[i]["Ejercicio"].ToString());
+                temp.Registro.Periodo = Convert.ToInt32(dt.Rows[i]["Periodo"].ToString());
+                temp.Registro.Cliente = dt.Rows[i]["Cliente"].ToString();
+                temp.Registro.NombreCliente = dt.Rows[i]["NombreCliente"].ToString();
+                temp.Registro.Tipo = dt.Rows[i]["Tipo"].ToString();
+                temp.Registro.Posicion = dt.Rows[i]["Posicion"].ToString();
+                temp.Registro.NombrePosicion = dt.Rows[i]["NombrePosicion"].ToString();
+                temp.Registro.FechaModificacion = dt.Rows[i]["FechaModificacion"].ToString();
+                temp.Registro.Partida = dt.Rows[i]["Partida"].ToString();
+                temp.Registro.Factor = Convert.ToInt32(dt.Rows[i]["Factor"].ToString());
+                temp.Registro.Importe = Convert.ToDecimal(dt.Rows[i]["Importe"].ToString());
+                temp.Registro.TipoCambio = Convert.ToDecimal(dt.Rows[i]["TipoCambio"].ToString());
+                temp.Registro.ImportePesos = Convert.ToDecimal(dt.Rows[i]["ImportePesos"].ToString());
+
+                budget[i] = temp;
+
+            }
+
+            return budget;
+        }
+
+        // GET: api/ContractedBudget
+        public IHttpActionResult Get()
+        {
+            Default def = new Default();
+            def.APIName = "Gaya Construcciones API";
+            def.APIVersion = "1.0.1";
+            def.APIPath = "/api/ContractedBudget/";
+            def.APIExample = "/api/ContractedBudget?Company={CompanyID}&Project={ProjectID}";
+            def.APIMessage = "Developed By ARS";
+
+            return Ok(def);
         }
         
-
         // GET: api/ContractedBudget?Empresa=G001?Proyecto=ATT_TOREO_0131INTF01
-        public IHttpActionResult Get(string Empresa, string Proyecto)
+        public IHttpActionResult Get(string Company, string Project)
         {
-            presupuesto2.Empresa = "Master Builder III";
-            presupuesto2.Proyecto = "Altan Redes";
-            presupuesto2.Contratos = new Contratos();
-            presupuesto2.Contratos.Cliente = "Pedro Torres";
-            presupuesto2.Contratos.Ejercicio = 2017;
-            presupuesto2.Contratos.Periodo = 4;
-            presupuesto2.Contratos.NumContrato = "Contrato Constr.Prov";
-            presupuesto2.Contratos.Posiciones = new object[] { "016-INST. ELECTRICAS", "123495.98" };
-
-            return Ok(presupuesto2);
+            return Ok(getBudget(Company, Project));
         }
-
+        
     }
 }

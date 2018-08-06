@@ -7,45 +7,29 @@ namespace GayaAPIRest.Models
 {
     public class ContractedBudget
     {
-        public string Empresa { get; set; }
-        public Proyecto Proyecto { get; set; }
-    }
-        
-    public class Proyecto
-    {
-        public string Nombre { get; set; }
-        public Contrato Contrato { get; set; }
+        public int IDRegistro { get; set; }
+        public Registro Registro { get; set; }
     }
 
-    public class Contrato
+    public class Registro
     {
-        public string NumContrato { get; set; }
+        public string IDEmpresa { get; set; }
+        public string NombreEmpresa { get; set; }
+        public string Proyecto { get; set; }
+        public string Contrato { get; set; }
         public int Ejercicio { get; set; }
         public int Periodo { get; set; }
-        public Cliente Cliente { get; set; }
-        public Posicion Posicion { get; set; }
-    }
-
-    public class Cliente
-    {
-        public string CodCliente { get; set; }
-        public string Nombre { get; set; }
-    }
-
-    public class Posicion
-    {
+        public string Cliente { get; set; }
+        public string NombreCliente { get; set; }
         public string Tipo { get; set; }
-        public string Nombre { get; set; }
-        public Partida Partida { get; set; }
-    }
-
-    public class Partida
-    {
-        public string Nombre { get; set; }
+        public string Posicion { get; set; }
+        public string NombrePosicion { get; set; }
+        public string FechaModificacion { get; set; }
+        public string Partida { get; set; }
         public int Factor { get; set; }
-        public float Importe { get; set; }
-        public float TipoCambio { get; set; }
-        public float ImportePesos { get; set; }
+        public decimal Importe { get; set; }
+        public decimal TipoCambio { get; set; }
+        public decimal ImportePesos { get; set; }
     }
     
 }
