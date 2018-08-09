@@ -14,10 +14,10 @@ namespace GayaAPIRest.Controllers
 {
     public class ContractedBudgetController : ApiController
     {
-        private ContractedBudget[] objectBuilder(string Empresa, string Proyecto)
+        private ContractedBudget[] objectBuilder(string Proyecto)
         {
             DataAccess da = new DataAccess();
-            DataTable dt = da.getContractedBudget(Empresa, Proyecto);
+            DataTable dt = da.getContractedBudget(Proyecto);
             ContractedBudget[] budget = new ContractedBudget[dt.Rows.Count];
 
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -66,9 +66,9 @@ namespace GayaAPIRest.Controllers
         }
         
         // GET: api/ContractedBudget?Empresa=G001?Proyecto=ATT_TOREO_0131INTF01
-        public IHttpActionResult Get(string Company, string Project)
+        public IHttpActionResult Get(string Project)
         {
-            return Ok(objectBuilder(Company, Project));
+            return Ok(objectBuilder(Project));
         }
         
     }

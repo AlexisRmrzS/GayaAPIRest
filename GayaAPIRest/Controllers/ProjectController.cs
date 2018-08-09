@@ -12,10 +12,10 @@ namespace GayaAPIRest.Controllers
 {
     public class ProjectController : ApiController
     {
-        private Project[] objectBuilder(string Project)
+        private Project[] objectBuilder(string Company)
         {
             DataAccess da = new DataAccess();
-            DataTable dt = da.getProject(Project);
+            DataTable dt = da.getProject(Company);
             Project[] projects;
 
             if (dt.Rows.Count >= 1)
@@ -28,20 +28,21 @@ namespace GayaAPIRest.Controllers
                     temp.NumProyecto = i + 1;
                     temp.DatosProyecto = new DatosProyecto();
 
-                    temp.DatosProyecto.Empresa = dt.Rows[i]["Empresa"].ToString();
+                    temp.DatosProyecto.EmpresaID = dt.Rows[i]["EmpresaID"].ToString();
+                    temp.DatosProyecto.EmpresaNombre = dt.Rows[i]["EmpresaNombre"].ToString();
                     temp.DatosProyecto.Clave = dt.Rows[i]["Proyecto"].ToString();
                     temp.DatosProyecto.Categoria = dt.Rows[i]["Categoria"].ToString();
                     temp.DatosProyecto.Descripcion = dt.Rows[i]["Descripcion"].ToString();
 
                     projects[i] = temp;
                 }
-            } 
+            }
             else
             {
                 projects = new Project[1];
                 Project temp = new Project();
                 temp.NumProyecto = 1;
-                temp.DatosProyecto = new DatosProyecto { Empresa = "", Clave = "Sin Proyectos", Categoria = "", Descripcion = "No se encontraron registros con la clave especificada." };
+                temp.DatosProyecto = new DatosProyecto { EmpresaID = "", EmpresaNombre = "", Clave = "Sin Proyectos", Categoria = "", Descripcion = "No se encontraron registros con la clave especificada." };
                 projects[0] = temp;
             }
             
@@ -54,10 +55,10 @@ namespace GayaAPIRest.Controllers
             return Ok(objectBuilder(null));
         }
 
-        // GET: api/Project/5
-        public IHttpActionResult Get(string ID)
+        // GET: api/Project/Company
+        public IHttpActionResult Get(string CompanyID)
         {
-            return Ok(objectBuilder(ID));
+            return Ok(objectBuilder(CompanyID));
         }
 
         

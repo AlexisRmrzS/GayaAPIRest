@@ -13,7 +13,8 @@ namespace GayaAPIRest.Models
     
     public class DatosProyecto
     {
-        public string Empresa { get; set; }
+        public string EmpresaID { get; set; }
+        public string EmpresaNombre { get; set; }
         public string Clave { get; set; }
         public string Categoria { get; set; }
         public string Descripcion { get; set; }
