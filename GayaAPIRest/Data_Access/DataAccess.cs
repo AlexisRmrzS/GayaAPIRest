@@ -12,7 +12,7 @@ namespace GayaAPIRest.Data_Access
     public class DataAccess
     {
         SqlConnection connectionString = new SqlConnection(Decrypt.FixedDecrypt(ConfigurationManager.AppSettings["secureConnection"]));
-
+        
         public DataTable getContractedBudget(string Proyecto)
         {
             string sqlSentence = "SELECT * FROM CP_PresupuestoContratado_CTE WHERE PROYECTO = @Proyecto ORDER BY Ejercicio, Periodo, FechaModificacion";
@@ -29,7 +29,31 @@ namespace GayaAPIRest.Data_Access
             SqlDataReader dr = cmd.ExecuteReader();
             
             dt.Load(dr);
+
+            connectionString.Close();
             
+            return dt;
+        }
+
+        public DataTable getInvoicedCte(string Proyecto)
+        {
+            string sqlSentence = "SELECT * FROM CP_Facturado_CTE WHERE PROYECTO = @Proyecto ORDER BY FechaEmision";
+
+            if (connectionString.State == ConnectionState.Open)
+                connectionString.Close();
+
+            SqlCommand cmd = new SqlCommand(sqlSentence, connectionString);
+            cmd.Parameters.Add("@Proyecto", SqlDbType.VarChar).Value = Proyecto;
+
+            connectionString.Open();
+
+            DataTable dt = new DataTable();
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            dt.Load(dr);
+
+            connectionString.Close();
+
             return dt;
         }
 

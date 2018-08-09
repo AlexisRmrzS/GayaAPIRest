@@ -14,9 +14,9 @@ namespace GayaAPIRest.Controllers
     {
         private Project[] objectBuilder(string Company)
         {
+            Project[] projects;
             DataAccess da = new DataAccess();
             DataTable dt = da.getProject(Company);
-            Project[] projects;
 
             if (dt.Rows.Count >= 1)
             {
@@ -45,20 +45,37 @@ namespace GayaAPIRest.Controllers
                 temp.DatosProyecto = new DatosProyecto { EmpresaID = "", EmpresaNombre = "", Clave = "Sin Proyectos", Categoria = "", Descripcion = "No se encontraron registros con la clave especificada." };
                 projects[0] = temp;
             }
-            
+
             return projects;
+            
         }
 
         // GET: api/Project
         public IHttpActionResult Get()
         {
-            return Ok(objectBuilder(null));
+            try
+            {
+                return Ok(objectBuilder(null));
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Exception = new { ErrorSource = e.Source, ErrorMethod = e.TargetSite.Name, ErrorMessage = e.Message } } );
+            }
+            
         }
 
         // GET: api/Project/Company
         public IHttpActionResult Get(string CompanyID)
         {
-            return Ok(objectBuilder(CompanyID));
+            try
+            {
+                return Ok(objectBuilder(CompanyID));
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Exception = new { ErrorSource = e.Source, ErrorMethod = e.TargetSite.Name, ErrorMessage = e.Message }});
+            }
+            
         }
 
         

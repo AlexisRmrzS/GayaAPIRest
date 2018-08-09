@@ -57,9 +57,9 @@ namespace GayaAPIRest.Controllers
         {
             Default def = new Default();
             def.APIName = "Gaya Construcciones API";
-            def.APIVersion = "1.0.1";
+            def.APIVersion = ConfigurationManager.AppSettings["APIVersion"];
             def.APIPath = "/api/ContractedBudget/";
-            def.APIExample = "/api/ContractedBudget?Company={CompanyID}&Project={ProjectID}";
+            def.APIExample = "/api/ContractedBudget?Project={ProjectID}";
             def.APIMessage = "Developed By ARS";
 
             return Ok(def);
@@ -68,7 +68,14 @@ namespace GayaAPIRest.Controllers
         // GET: api/ContractedBudget?Empresa=G001?Proyecto=ATT_TOREO_0131INTF01
         public IHttpActionResult Get(string Project)
         {
-            return Ok(objectBuilder(Project));
+            try
+            {
+                return Ok(objectBuilder(Project));
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Exception = new { ErrorSource = e.Source, ErrorMethod = e.TargetSite.Name, ErrorMessage = e.Message } });
+            }
         }
         
     }
