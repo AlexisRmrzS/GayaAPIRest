@@ -64,7 +64,7 @@ namespace GayaAPIRest.Controllers
             return Ok(def);
         }
 
-        // GET: api/InvoicedCte/5
+        // GET: api/InvoicedCte?Project=ATT_TOREO_0131INTF01
         public IHttpActionResult Get(string Project)
         {
             try

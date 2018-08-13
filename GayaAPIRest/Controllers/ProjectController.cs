@@ -64,7 +64,7 @@ namespace GayaAPIRest.Controllers
             
         }
 
-        // GET: api/Project/Company
+        // GET: api/Project?CompanyID=G001
         public IHttpActionResult Get(string CompanyID)
         {
             try

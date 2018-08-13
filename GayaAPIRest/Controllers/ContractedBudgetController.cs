@@ -65,7 +65,7 @@ namespace GayaAPIRest.Controllers
             return Ok(def);
         }
         
-        // GET: api/ContractedBudget?Empresa=G001?Proyecto=ATT_TOREO_0131INTF01
+        // GET: api/ContractedBudget?Project=ATT_TOREO_0131INTF01
         public IHttpActionResult Get(string Project)
         {
             try
