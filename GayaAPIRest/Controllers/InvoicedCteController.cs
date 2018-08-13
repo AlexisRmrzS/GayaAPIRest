@@ -55,7 +55,7 @@ namespace GayaAPIRest.Controllers
         public IHttpActionResult Get()
         {
             Default def = new Default();
-            def.APIName = "Gaya Construcciones API";
+            def.APIName = ConfigurationManager.AppSettings["APIName"];
             def.APIVersion = ConfigurationManager.AppSettings["APIVersion"];
             def.APIPath = "/api/InvoicedCte/";
             def.APIExample = "/api/InvoicedCte?Project={ProjectID}";
