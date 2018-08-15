@@ -114,17 +114,21 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CommittedBudgetController.cs" />
     <Compile Include="Controllers\ContractedBudgetController.cs" />
     <Compile Include="Controllers\InvoicedCteController.cs" />
+    <Compile Include="Controllers\InvoicedProvController.cs" />
     <Compile Include="Controllers\OperationBudgetController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Data_Access\DataAccess.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CommittedBudget.cs" />
     <Compile Include="Models\ContractedBudget.cs" />
     <Compile Include="Models\Default.cs" />
     <Compile Include="Models\InvoicedCte.cs" />
+    <Compile Include="Models\InvoicedProv.cs" />
     <Compile Include="Models\OperationBudget.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

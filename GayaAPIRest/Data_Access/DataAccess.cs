@@ -109,5 +109,50 @@ namespace GayaAPIRest.Data_Access
             return dt;
         }
 
+        public DataTable getCommittedBudget(string Proyecto)
+        {
+            string sqlSentence = "SELECT * FROM CP_Comprometido_Prov WHERE PROYECTO = @Proyecto ORDER BY FechaEmision";
+
+            if (connectionString.State == ConnectionState.Open)
+                connectionString.Close();
+
+            SqlCommand cmd = new SqlCommand(sqlSentence, connectionString);
+            cmd.Parameters.Add("@Proyecto", SqlDbType.VarChar).Value = Proyecto;
+
+            connectionString.Open();
+
+            DataTable dt = new DataTable();
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            dt.Load(dr);
+
+            connectionString.Close();
+
+            return dt;
+        }
+
+        public DataTable getInvoicedProv(string Proyecto)
+        {
+            string sqlSentence = "SELECT * FROM CP_Facturado_Prov WHERE PROYECTO = @Proyecto ORDER BY FechaEmision";
+
+            if (connectionString.State == ConnectionState.Open)
+                connectionString.Close();
+
+            SqlCommand cmd = new SqlCommand(sqlSentence, connectionString);
+            cmd.Parameters.Add("@Proyecto", SqlDbType.VarChar).Value = Proyecto;
+
+            connectionString.Open();
+
+            DataTable dt = new DataTable();
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            dt.Load(dr);
+
+            connectionString.Close();
+
+            return dt;
+        }
+
+
     }
 }
