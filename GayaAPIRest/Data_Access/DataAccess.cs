@@ -45,7 +45,7 @@ namespace GayaAPIRest.Data_Access
 
         public DataTable getContractedBudget(string Proyecto)
         {
-            string sqlSentence = "SELECT * FROM CP_PresupuestoContratado_CTE WHERE PROYECTO = @Proyecto ORDER BY Ejercicio, Periodo, FechaModificacion";
+            string sqlSentence = "SELECT * FROM API_PresupuestoContratado_CTE WHERE PROYECTO = @Proyecto ORDER BY Ejercicio, Periodo, FechaModificacion";
 
             if (connectionString.State == ConnectionState.Open)
                 connectionString.Close();
@@ -67,7 +67,7 @@ namespace GayaAPIRest.Data_Access
 
         public DataTable getInvoicedCte(string Proyecto)
         {
-            string sqlSentence = "SELECT * FROM CP_Facturado_CTE WHERE PROYECTO = @Proyecto ORDER BY FechaEmision";
+            string sqlSentence = "SELECT * FROM API_Facturado_CTE WHERE PROYECTO = @Proyecto ORDER BY FechaEmision";
 
             if (connectionString.State == ConnectionState.Open)
                 connectionString.Close();
@@ -89,7 +89,7 @@ namespace GayaAPIRest.Data_Access
         
         public  DataTable getOperationBudget(string Proyecto)
         {
-            string sqlSentence = "SELECT * FROM CP_PresupuestoOp_Prov WHERE PROYECTO = @Proyecto ORDER BY FechaEmision";
+            string sqlSentence = "SELECT * FROM API_PresupuestoOp_Prov WHERE PROYECTO = @Proyecto ORDER BY FechaEmision";
 
             if (connectionString.State == ConnectionState.Open)
                 connectionString.Close();
@@ -111,7 +111,7 @@ namespace GayaAPIRest.Data_Access
 
         public DataTable getCommittedBudget(string Proyecto)
         {
-            string sqlSentence = "SELECT * FROM CP_Comprometido_Prov WHERE PROYECTO = @Proyecto ORDER BY FechaEmision";
+            string sqlSentence = "SELECT * FROM API_Comprometido_Prov WHERE PROYECTO = @Proyecto ORDER BY FechaEmision";
 
             if (connectionString.State == ConnectionState.Open)
                 connectionString.Close();
@@ -133,7 +133,7 @@ namespace GayaAPIRest.Data_Access
 
         public DataTable getInvoicedProv(string Proyecto)
         {
-            string sqlSentence = "SELECT * FROM CP_Facturado_Prov WHERE PROYECTO = @Proyecto ORDER BY FechaEmision";
+            string sqlSentence = "SELECT * FROM API_Facturado_Prov WHERE PROYECTO = @Proyecto ORDER BY FechaEmision";
 
             if (connectionString.State == ConnectionState.Open)
                 connectionString.Close();
@@ -153,6 +153,49 @@ namespace GayaAPIRest.Data_Access
             return dt;
         }
 
+        public DataTable getInvoicesPaid(string Proyecto)
+        {
+            string sqlSentence = "SELECT * FROM API_Pagado_Prov WHERE PROYECTO = @Proyecto ORDER BY FechaEmision";
+
+            if (connectionString.State == ConnectionState.Open)
+                connectionString.Close();
+
+            SqlCommand cmd = new SqlCommand(sqlSentence, connectionString);
+            cmd.Parameters.Add("@Proyecto", SqlDbType.VarChar).Value = Proyecto;
+
+            connectionString.Open();
+
+            DataTable dt = new DataTable();
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            dt.Load(dr);
+
+            connectionString.Close();
+
+            return dt;
+        }
+
+        public DataTable getInvoicesCharged(string Proyecto)
+        {
+            if (connectionString.State == ConnectionState.Open)
+                connectionString.Close();
+
+            SqlCommand cmd = new SqlCommand("spAPIGaya_CobradoCTE", connectionString);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@Proyecto", SqlDbType.VarChar).Value = Proyecto;
+
+            connectionString.Open();
+
+            DataTable dt = new DataTable();
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            dt.Load(dr);
+
+            connectionString.Close();
+
+            return dt;
+        }
 
     }
 }

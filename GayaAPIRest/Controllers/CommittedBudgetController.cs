@@ -62,7 +62,7 @@ namespace GayaAPIRest.Controllers
             return Ok(def);
         }
 
-        // GET: api/CommittedBudget/5
+        // GET: api/CommittedBudget?Project=ATT_TOREO_0131INTF01
         public IHttpActionResult Get(string Project)
         {
             try
@@ -74,7 +74,5 @@ namespace GayaAPIRest.Controllers
                 return Ok(new { Exception = new { ErrorSource = e.Source, ErrorMethod = e.TargetSite.Name, ErrorMessage = e.Message } });
             }
         }
-
-
     }
 }
